@@ -30,12 +30,13 @@ use crate::{dirs, file};
 
 use self::forge_meta::ForgeMeta;
 
-mod cargo;
+pub mod cargo;
 pub mod forge_meta;
-mod go;
-mod npm;
-mod pipx;
-mod ubi;
+pub mod go;
+pub mod npm;
+pub mod pipx;
+pub mod ubi;
+pub mod vfox;
 
 pub type AForge = Arc<dyn Forge>;
 pub type ForgeMap = BTreeMap<ForgeArg, AForge>;
@@ -53,6 +54,7 @@ pub enum ForgeType {
     Npm,
     Pipx,
     Ubi,
+    Vfox,
 }
 
 impl Display for ForgeType {
@@ -63,8 +65,7 @@ impl Display for ForgeType {
 
 static FORGES: Mutex<Option<ForgeMap>> = Mutex::new(None);
 
-// TODO: make this private
-pub fn load_forges() -> ForgeMap {
+fn load_forges() -> ForgeMap {
     let mut forges = FORGES.lock().unwrap();
     if let Some(forges) = &*forges {
         return forges.clone();
@@ -96,6 +97,7 @@ fn list_installed_forges() -> eyre::Result<ForgeList> {
                 ForgeType::Go => Arc::new(go::GoForge::new(fa.name)) as AForge,
                 ForgeType::Pipx => Arc::new(pipx::PIPXForge::new(fa.name)) as AForge,
                 ForgeType::Ubi => Arc::new(ubi::UbiForge::new(fa.name)) as AForge,
+                ForgeType::Vfox => Arc::new(vfox::VfoxForge::new(fa.name)) as AForge,
             }
         })
         .filter(|f| f.fa().forge_type != ForgeType::Asdf)
@@ -127,6 +129,7 @@ pub fn get(fa: &ForgeArg) -> AForge {
                 ForgeType::Go => Arc::new(go::GoForge::new(name)),
                 ForgeType::Pipx => Arc::new(pipx::PIPXForge::new(name)),
                 ForgeType::Ubi => Arc::new(ubi::UbiForge::new(name)),
+                ForgeType::Vfox => Arc::new(vfox::VfoxForge::new(name)),
             })
             .clone()
     }
