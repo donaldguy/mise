@@ -1,5 +1,20 @@
 # Changelog
 
+## [2024.5.23](https://github.com/jdx/mise/compare/v2024.5.22..v2024.5.23) - 2024-05-26
+
+### 🐛 Bug Fixes
+
+- **(self_update)** explicitly set target since there seems to be a bug with .identifier() by [@jdx](https://github.com/jdx) in [#2190](https://github.com/jdx/mise/pull/2190)
+- minor race condition creating directories by [@jdx](https://github.com/jdx) in [23db391](https://github.com/jdx/mise/commit/23db39146c8edf7340472302e7f498f1d89cf5b4)
+
+### 🧪 Testing
+
+- break coverage tasks up a bit by [@jdx](https://github.com/jdx) in [#2192](https://github.com/jdx/mise/pull/2192)
+
+### 🔍 Other Changes
+
+- updated zip by [@jdx](https://github.com/jdx) in [#2191](https://github.com/jdx/mise/pull/2191)
+
 ## [2024.5.22](https://github.com/jdx/mise/compare/v2024.5.21..v2024.5.22) - 2024-05-25
 
 ### 🐛 Bug Fixes
